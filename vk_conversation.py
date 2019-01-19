@@ -40,11 +40,9 @@ keyboard_nachat.add_button('Начать', color=VkKeyboardColor.POSITIVE)
 
 
 vk = server(tocken_vk)
-
 couple = COUPLE_DF()
 USERS_baza = USERS_DF()
-
-#vk.test2()
+vk_df = vk_df()
 
 def massage_handler(user):
 
@@ -263,28 +261,39 @@ def massage_handler_1(user):
     except Exception as e:
         print(e)
         return ()
+def main(vk,couple,USERS_baza,vk_df):
+    while True:
+        if True:
+            sleep(1)
+            vk_df.read()
+            vk_df.print()
+            for id in range(len(vk_df.get_user())):
+                dd = np.array(vk_df.get_user().loc[id])
+                user = user_vk(dd[0])
 
-vk_df = vk_df()
-while True:
-    if True:
-        sleep(1)
-        vk_df.read()
-        vk_df.print()
-        for id in range(len(vk_df.get_user())):
-            dd = np.array(vk_df.get_user().loc[id])
-            user = user_vk(dd[0])
+                massage_handler(user)
+                vk_df.usr_read(dd[0])
+                del user
 
-            massage_handler(user)
-            vk_df.usr_read(dd[0])
-            del user
+            for id in range(len(vk_df.get_user_1())):
+                dd = np.array(vk_df.get_user_1().loc[id])
+                user = user_vk(dd[0])
 
-        for id in range(len(vk_df.get_user_1())):
-            dd = np.array(vk_df.get_user_1().loc[id])
-            user = user_vk(dd[0])
+                massage_handler_1(user)
+                vk_df.usr_read(dd[0])
+                del user
 
-            massage_handler_1(user)
-            vk_df.usr_read(dd[0])
-            del user
+            vk_df.write()
 
-        vk_df.write()
 
+#main(vk,couple,USERS_baza,vk_df)
+
+
+import threading
+
+
+t1 = threading.Thread(target=main, args=(vk,couple,USERS_baza,vk_df))
+t1.start()
+
+t2 = threading.Thread(target=vk.listen, args = (user_vk, vk_df))
+t2.start()
