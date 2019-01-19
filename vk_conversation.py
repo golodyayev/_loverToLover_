@@ -1,4 +1,5 @@
-from vk_class import server , user_vk, vk_df
+from vk_class import server , user_vk
+from vk_class import vk_df
 from tockens import tocken_vk
 import numpy as np
 from time import sleep
@@ -261,7 +262,9 @@ def massage_handler_1(user):
     except Exception as e:
         print(e)
         return ()
-def main(vk,couple,USERS_baza,vk_df):
+
+
+if True:
     while True:
         if True:
             sleep(1)
@@ -285,15 +288,3 @@ def main(vk,couple,USERS_baza,vk_df):
 
             vk_df.write()
 
-
-#main(vk,couple,USERS_baza,vk_df)
-
-
-import threading
-
-
-t1 = threading.Thread(target=main, args=(vk,couple,USERS_baza,vk_df))
-t1.start()
-
-t2 = threading.Thread(target=vk.listen, args = (user_vk, vk_df))
-t2.start()
