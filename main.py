@@ -48,106 +48,113 @@ question = questions()
 current = Current_day()
 data = data()
 
-while True:
-    print (int(datetime.datetime.now().strftime('%M')))
-    t = 1.5
-    if t>1:
-
-
-        couple.read()
-        current.read()
-        current.clear()
-        couples = couple.get_couple()
-        current.us_append_couples(couple.get_couple()[["couple_id", "user_id1", "user_id2", "key"]])
-        current.write()
-        print(datetime.datetime.now())
-
-        for i in range(len(couples)):
-            #change id identify from vk/tg
-            user1 = str(couples.iloc[i][2])
-            user2 = str(couples.iloc[i][1])
-            print (user1,user2)
-            co_id = str(couples.iloc[i][0])
-            co_key = str(couples.iloc[i][3])
-
-            num1 = random.randint(0,len(book)-1)
-            num2 = random.randint(0,len(book)-1)
-            num3 = random.randint(0,len(book)-1)
-            num4 = random.randint(0,len(book)-1)
-            num5 = random.randint(0,len(book)-1)
-
-
-            current.us_append_question(str(co_id),str(co_key), str([num1,num2,num3,num4,num5]))
-
-            print("ff")
-            task = '\n – '.join([book[num1],book[num2],book[num3],book[num4],book[num5]])
-            send = "Ваше задание на сегодня: \n – {}".format(task)
-
-            if user1[:2] == "tg":
-                bot.send_message(user1[3:], text=send)
-            else:
-                vk.send_message2(user1[3:],send)
-
-            if user2[:2] == "tg":
-                bot.send_message(user2[3:], text=send)
-            else:
-                vk.send_message2(user2[3:],send)
-
-
-            send2 = "выберите задание которое вы бы хотели выболнить больше всего"
-            if user1[:2] == "tg":
-                bot.send_message(user1[3:], text=send2, reply_markup=markup)
-            else:
-                vk.send_message(user1[3:],send2,keyboard_statistic)
-
-            if user2[:2] == "tg":
-                bot.send_message(user2[3:], text=send2, reply_markup=markup)
-            else:
-                vk.send_message(user2[3:], send2, keyboard_statistic)
-
-
-            print("Send task #XXXXXX to {} ".format(couples.iloc[i][0]))
-            current.write()
-
-
-        sleep(120)
-
+def sender(input):
+    [data, current, couple, book, bot, vk, keyboard_statistic, keyboard_like, markup, like] = input
+    print("main")
+    while True:
+        print (int(datetime.datetime.now().strftime('%M')))
+        t = 1.5
         if t>1:
-
 
 
             couple.read()
             current.read()
+            current.clear()
             couples = couple.get_couple()
-
-            extract = current.extract()
-            data.read()
-            data.uppend(current.df)
-            data.write()
+            current.us_append_couples(couple.get_couple()[["couple_id", "user_id1", "user_id2", "key"]])
+            current.write()
+            print(datetime.datetime.now())
 
             for i in range(len(couples)):
+                #change id identify from vk/tg
                 user1 = str(couples.iloc[i][2])
                 user2 = str(couples.iloc[i][1])
-                number = int(extract.loc[i]["number"])
-                print("send final task")
-                task = book[number]
-                send = "Сегодня вы с вашей парой выполните следующую фигню: \n – {}".format(task)
+                print (user1,user2)
+                co_id = str(couples.iloc[i][0])
+                co_key = str(couples.iloc[i][3])
+
+                num1 = random.randint(0,len(book)-1)
+                num2 = random.randint(0,len(book)-1)
+                num3 = random.randint(0,len(book)-1)
+                num4 = random.randint(0,len(book)-1)
+                num5 = random.randint(0,len(book)-1)
+
+
+                current.us_append_question(str(co_id),str(co_key), str([num1,num2,num3,num4,num5]))
+
+                print("ff")
+                task = '\n – '.join([book[num1],book[num2],book[num3],book[num4],book[num5]])
+                send = "Ваше задание на сегодня: \n – {}".format(task)
+
                 if user1[:2] == "tg":
-                    bot.send_message(user1[3:], text=send, reply_markup=like)
+                    bot.send_message(user1[3:], text=send)
                 else:
-                    vk.send_message(user1[3:], send, keyboard_statistic)
+                    vk.send_message2(user1[3:],send)
 
                 if user2[:2] == "tg":
-                    bot.send_message(user2[3:], text=send, reply_markup=like)
+                    bot.send_message(user2[3:], text=send)
                 else:
-                    vk.send_message(user2[3:], send, keyboard_statistic)
+                    vk.send_message2(user2[3:],send)
 
 
+                send2 = "выберите задание которое вы бы хотели выболнить больше всего"
+                if user1[:2] == "tg":
+                    bot.send_message(user1[3:], text=send2, reply_markup=markup)
+                else:
+                    vk.send_message(user1[3:],send2,keyboard_statistic)
+
+                if user2[:2] == "tg":
+                    bot.send_message(user2[3:], text=send2, reply_markup=markup)
+                else:
+                    vk.send_message(user2[3:], send2, keyboard_statistic)
 
 
-
-                print("Send finaltask yooohooo #XXXXXX to {} ".format(couples.iloc[i][0]))
+                print("Send task #XXXXXX to {} ".format(couples.iloc[i][0]))
                 current.write()
 
 
-        sleep(120)
+            sleep(120)
+
+            if t>1:
+
+
+
+                couple.read()
+                current.read()
+                couples = couple.get_couple()
+
+                extract = current.extract()
+                data.read()
+                data.uppend(current.df)
+                data.write()
+
+                for i in range(len(couples)):
+                    user1 = str(couples.iloc[i][2])
+                    user2 = str(couples.iloc[i][1])
+                    number = int(extract.loc[i]["number"])
+                    print("send final task")
+                    task = book[number]
+                    send = "Сегодня вы с вашей парой выполните следующую фигню: \n – {}".format(task)
+                    if user1[:2] == "tg":
+                        bot.send_message(user1[3:], text=send, reply_markup=like)
+                    else:
+                        vk.send_message(user1[3:], send, keyboard_statistic)
+
+                    if user2[:2] == "tg":
+                        bot.send_message(user2[3:], text=send, reply_markup=like)
+                    else:
+                        vk.send_message(user2[3:], send, keyboard_statistic)
+
+
+
+
+
+                    print("Send finaltask yooohooo #XXXXXX to {} ".format(couples.iloc[i][0]))
+                    current.write()
+
+
+            sleep(120)
+
+
+
+#sender(data,current,couple,book,bot,vk,keyboard_statistic,keyboard_like,markup,like)

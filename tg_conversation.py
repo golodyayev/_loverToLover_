@@ -63,15 +63,6 @@ from class1 import USER, USERS_DF
 from class2 import COUPLE_DF,questions , data,Current_day
 
 
-couple = COUPLE_DF()
-USERS_baza = USERS_DF()
-
-
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
-logger = logging.getLogger(__name__)
-
 def start(bot, update):
     update.message.reply_text("Hello chose option",
                               reply_markup=main_menu_keyboard())
@@ -174,47 +165,11 @@ def messg_gen(bot, update):
 def messg_from_main(bot, update):
     update.message.reply_text("Мы пришли сюда по запросу из мэин: какая тема еще интересна: ",reply_markup= chosen_keyboard())
 
-updater = Updater(token)
-
-dp = updater.dispatcher
-
-dp.add_handler(CommandHandler('start', start))
-dp.add_error_handler(error)
-
-TYPING_CHOICE1 = 0
-TYPING_CHOICE2 = 0
-CHOICE1 = 1
-CHOICE2 = 1
-
-conv_handler = ConversationHandler(
-    entry_points= [RegexHandler('^(Join)$', join)],
-    states = {
-        TYPING_CHOICE1: [MessageHandler(Filters.text,
-                                       find_key)],
-        CHOICE1: [RegexHandler('^Начать$', messg_join)]
-    },
-
-    fallbacks = [CommandHandler('cancel', cancel)]
-)
-
-conv_handler2 = ConversationHandler(
-    entry_points= [RegexHandler('^(Generate)$', generate)],
-    states = {
-        TYPING_CHOICE2: [RegexHandler('^(Прислать код)$',
-                                       generate_key)],
-        CHOICE2 :        [RegexHandler('^Начать$', messg_gen)]
-
-    },
-
-    fallbacks = [CommandHandler('cancel', cancel)]
-)
 
 def doit(bot, update):
     text = "вот ту короче пока алгоритм закончился но мы тебя записали!!"
     update.message.reply_text(text, reply_markup= ReplyKeyboardRemove() )
 
-
-dp.add_handler(RegexHandler('^(Done!|Не сделал)$', doit))
 
 
 def after_choise1_(bot, update):
@@ -369,43 +324,103 @@ def after_choise__5(bot, update):
     update.message.reply_text("ждите короче)_Это конец",reply_markup= ReplyKeyboardRemove())
     return ConversationHandler.END
 
+
+TYPING_CHOICE1 = 0
+TYPING_CHOICE2 = 0
+CHOICE1 = 1
+CHOICE2 = 1
 var1,var2 = 0,1
+couple = COUPLE_DF()
+USERS_baza = USERS_DF()
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
+updater = Updater(token)
+
+
+def tg_converastion(input2):
+    [logger,updater,couple, USERS_baza, TYPING_CHOICE1,TYPING_CHOICE2,CHOICE1,CHOICE2,var1,var2] = input2
+    print("tg_conversation")
+
+
+
+    dp = updater.dispatcher
+
+    dp.add_handler(CommandHandler('start', start))
+    dp.add_error_handler(error)
+
+
+
+    conv_handler = ConversationHandler(
+        entry_points= [RegexHandler('^(Join)$', join)],
+        states = {
+            TYPING_CHOICE1: [MessageHandler(Filters.text,
+                                           find_key)],
+            CHOICE1: [RegexHandler('^Начать$', messg_join)]
+        },
+
+        fallbacks = [CommandHandler('cancel', cancel)]
+    )
+
+    conv_handler2 = ConversationHandler(
+        entry_points= [RegexHandler('^(Generate)$', generate)],
+        states = {
+            TYPING_CHOICE2: [RegexHandler('^(Прислать код)$',
+                                           generate_key)],
+            CHOICE2 :        [RegexHandler('^Начать$', messg_gen)]
+
+        },
+
+        fallbacks = [CommandHandler('cancel', cancel)]
+    )
+
+
+    dp.add_handler(RegexHandler('^(Done!|Не сделал)$', doit))
+
+
+
+    var1,var2 = 0,1
 
 
 
 
 
-conv_handler3 = ConversationHandler(
-    entry_points= [RegexHandler('^(1)$', after_choise1_),
-                   RegexHandler('^(2)$', after_choise2_),
-                   RegexHandler('^(3)$', after_choise3_),
-                   RegexHandler('^(4)$', after_choise4_),
-                   RegexHandler('^(5)$', after_choise5_)],
-    states = {
-        var1: [RegexHandler('^(2)$', after_choise_2),
-               RegexHandler('^(1)$', after_choise_1),
-               RegexHandler('^(3)$', after_choise_3),
-               RegexHandler('^(4)$', after_choise_4),
-               RegexHandler('^(5)$', after_choise_5)],
+    conv_handler3 = ConversationHandler(
+        entry_points= [RegexHandler('^(1)$', after_choise1_),
+                       RegexHandler('^(2)$', after_choise2_),
+                       RegexHandler('^(3)$', after_choise3_),
+                       RegexHandler('^(4)$', after_choise4_),
+                       RegexHandler('^(5)$', after_choise5_)],
+        states = {
+            var1: [RegexHandler('^(2)$', after_choise_2),
+                   RegexHandler('^(1)$', after_choise_1),
+                   RegexHandler('^(3)$', after_choise_3),
+                   RegexHandler('^(4)$', after_choise_4),
+                   RegexHandler('^(5)$', after_choise_5)],
 
-        var2: [RegexHandler('^(2)$', after_choise__2),
-               RegexHandler('^(1)$', after_choise__1),
-               RegexHandler('^(3)$', after_choise__3),
-               RegexHandler('^(4)$', after_choise__4),
-               RegexHandler('^(5)$', after_choise__5)]
+            var2: [RegexHandler('^(2)$', after_choise__2),
+                   RegexHandler('^(1)$', after_choise__1),
+                   RegexHandler('^(3)$', after_choise__3),
+                   RegexHandler('^(4)$', after_choise__4),
+                   RegexHandler('^(5)$', after_choise__5)]
 
-    },
+        },
 
-    fallbacks = [CommandHandler('cancel', cancel)]
-)
-
-
+        fallbacks = [CommandHandler('cancel', cancel)]
+    )
 
 
-dp.add_handler(conv_handler)
-dp.add_handler(conv_handler2)
-dp.add_handler(conv_handler3)
 
-updater.start_polling()
 
-updater.idle()
+    dp.add_handler(conv_handler)
+    dp.add_handler(conv_handler2)
+    dp.add_handler(conv_handler3)
+
+    updater.start_polling()
+
+    updater.idle()
+
+#tg_converastion(logger,updater,couple, USERS_baza, TYPING_CHOICE1,TYPING_CHOICE2,CHOICE1,CHOICE2,var1,var2)

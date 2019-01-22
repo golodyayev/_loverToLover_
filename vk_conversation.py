@@ -3,6 +3,7 @@ from vk_class import vk_df
 from tockens import tocken_vk
 import numpy as np
 from time import sleep
+import datetime
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 import uuid
 
@@ -45,17 +46,17 @@ couple = COUPLE_DF()
 USERS_baza = USERS_DF()
 vk_df = vk_df()
 
-def massage_handler(user):
+def massage_handler(user,vk_df,dd):
 
     user.read()
     #if True:
     try:
-        print("nen")
+
         first = np.array(user.df.loc[user.df.stat == 0, "msg"])[0]
         bl = (user.df.stat == 0)
         xxx = find_bool(bl)
-        if len(first)>0 :
-            print (first)
+        if len(first) > 0:
+            print (first, " ot " ,user.id)
             if first == "/start":
                 vk.send_message(user.id, "Hello chose the option", keyboard_start)
 
@@ -92,7 +93,7 @@ def massage_handler(user):
             else:
                 m1 = user.df.loc[xxx-1 , "msg"]
                 m2 = user.df.loc[xxx-2 , "msg"]
-                print (m1,m2,"m1m2")
+                #print (m1,m2,"m1m2")
                 if m1 == "Join" or m2 == "Join":
 
 
@@ -110,7 +111,7 @@ def massage_handler(user):
                         USERS_baza.write()
                         couple.write()
                     else:
-                        print("fddd")
+                        #print("fddd")
                         vk.send_message2(user.id, "код не подошел, попробуй еще")
                         user.df.loc[xxx] = None
                         user.df = user.df.dropna()
@@ -130,20 +131,22 @@ def massage_handler(user):
 
 
             user.df.loc[xxx, "stat"] = 1
-            print(user.df)
+            #print(user.df)
             user.write()
-            massage_handler(user)
-        else :
+            massage_handler(user, vk_df, dd)
+        else:
+            vk_df.usr_read(dd[0])
 
             return()
     #try: print(1)
     except Exception as e:
         print(e)
+        vk_df.usr_read(dd[0])
         return()
 
-def find(a1,a2,a3,a4):
+def find(a1,a2,a3):
     kol = 0
-    for i in [a1,a2,a3,a4]:
+    for i in [a1,a2,a3]:
         try:
             int(i)
             kol += 1
@@ -151,7 +154,7 @@ def find(a1,a2,a3,a4):
             pass
     return(kol)
 
-def piwu_pismo(first, text, x):
+def piwu_pismo(first, text, x,user):
     if first == "1":
         current = Current_day()
         current.read()
@@ -187,7 +190,7 @@ def piwu_pismo(first, text, x):
 
 
 
-def piwu_pismo2(first,text, x):
+def piwu_pismo2(first,text, x,user):
     if first == "1":
         current = Current_day()
         current.read()
@@ -221,11 +224,10 @@ def piwu_pismo2(first,text, x):
     else:
         vk.send_message2(user.id, "чет не понял, сорян")
 
-def massage_handler_1(user):
+def massage_handler_1(user,vk_df,dd):
     user.read()
-    # if True:
+    #if True:
     try:
-        print("ятуту")
         first = np.array(user.df.loc[user.df.stat == 0, "msg"])[0]
         bl = (user.df.stat == 0)
         xxx = find_bool(bl)
@@ -234,57 +236,60 @@ def massage_handler_1(user):
             m1 = user.df.loc[xxx - 1, "msg"]
             m2 = user.df.loc[xxx - 2, "msg"]
             m3 = user.df.loc[xxx - 3, "msg"]
-            m4 = user.df.loc[xxx - 4, "msg"]
 
-            kol = find(m1,m2,m3,m4)
+            kol = find(m1,m2,m3)
             if kol == 0:
                 text = "Спасибо за выбор, выберите что нить еще прикольное"
-                piwu_pismo(first,text, 5)
+                piwu_pismo(first,text, 5,user)
             elif kol == 1:
                 text = "Спасибо за выбор, выберите что нить еще прикольное"
-                piwu_pismo(first,text, 3)
+                piwu_pismo(first,text, 3,user)
 
             elif kol == 2:
                 text = "ну всё, ждите"
-                piwu_pismo2(first,text, 1)
+                piwu_pismo2(first,text, 1,user)
             else:
 
                 vk.send_message2(user.id, "чет не понял, сорян")
 
             user.df.loc[xxx, "stat"] = 1
-            print(user.df)
+            #print(user.df)
             user.write()
-            massage_handler(user)
+            massage_handler_1(user, vk_df, dd)
         else:
-
+            vk_df.usr_read(dd[0])
             return ()
-    # try: print(1)
+    #try: print(1)
     except Exception as e:
+        vk_df.usr_read(dd[0])
         print(e)
         return ()
 
 
-if True:
+def vk_con():
+    print("vk_convesation")
     while True:
         if True:
             sleep(1)
             vk_df.read()
-            vk_df.print()
+            #vk_df.print()
+
             for id in range(len(vk_df.get_user())):
                 dd = np.array(vk_df.get_user().loc[id])
                 user = user_vk(dd[0])
 
-                massage_handler(user)
-                vk_df.usr_read(dd[0])
-                del user
+                massage_handler(user,vk_df,dd)
+                #vk_df.usr_read(dd[0])
+
 
             for id in range(len(vk_df.get_user_1())):
                 dd = np.array(vk_df.get_user_1().loc[id])
                 user = user_vk(dd[0])
 
-                massage_handler_1(user)
-                vk_df.usr_read(dd[0])
-                del user
+                massage_handler_1(user,vk_df,dd)
+                #vk_df.usr_read(dd[0])
+
 
             vk_df.write()
 
+#vk_con()
