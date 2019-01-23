@@ -1,6 +1,5 @@
 from tockens import tocken_tg as token
 import uuid
-import threading
 
 from ppz import MessageHandler2
 from telegram import (ReplyKeyboardMarkup, ReplyKeyboardRemove)
@@ -342,12 +341,10 @@ logger = logging.getLogger(__name__)
 updater = Updater(token)
 
 
-import asyncio
-
 def tg_converastion(input2):
     [logger,updater,couple, USERS_baza, TYPING_CHOICE1,TYPING_CHOICE2,CHOICE1,CHOICE2,var1,var2] = input2
     print("tg_conversation")
-    print (threading.currentThread().getName())
+
 
 
     dp = updater.dispatcher
