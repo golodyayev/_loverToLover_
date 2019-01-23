@@ -40,7 +40,7 @@ markup.row('3', '4', '5')
 like = types.ReplyKeyboardMarkup()
 like.row('Done!','Не сделал')
 
-print (random.randint(0,len(book)))
+#print (random.randint(0,len(book)))
 
 from class2 import COUPLE_DF,questions , data,Current_day
 
@@ -51,11 +51,11 @@ data = data()
 
 def sender(input):
     [data, current, couple, book, bot, vk, keyboard_statistic, keyboard_like, markup, like] = input
-    print("main")
+    #print("main")
     print (threading.currentThread().getName())
 
     while True:
-        print (int(datetime.datetime.now().strftime('%M')))
+        #print (int(datetime.datetime.now().strftime('%M')))
         t = 1.5
         if t>1:
 
@@ -72,7 +72,6 @@ def sender(input):
                 #change id identify from vk/tg
                 user1 = str(couples.iloc[i][2])
                 user2 = str(couples.iloc[i][1])
-                print (user1,user2)
                 co_id = str(couples.iloc[i][0])
                 co_key = str(couples.iloc[i][3])
 
@@ -85,7 +84,6 @@ def sender(input):
 
                 current.us_append_question(str(co_id),str(co_key), str([num1,num2,num3,num4,num5]))
 
-                print("ff")
                 task = '\n – '.join([book[num1],book[num2],book[num3],book[num4],book[num5]])
                 send = "Ваше задание на сегодня: \n – {}".format(task)
 
@@ -160,4 +158,4 @@ def sender(input):
 
 
 
-sender([data,current,couple,book,bot,vk,keyboard_statistic,keyboard_like,markup,like])
+#sender([data,current,couple,book,bot,vk,keyboard_statistic,keyboard_like,markup,like])

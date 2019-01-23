@@ -292,4 +292,4 @@ def vk_con():
 
             vk_df.write()
 
-vk_con()
+#vk_con()

@@ -132,13 +132,26 @@ def main():
 
 
 
-    aa = Process(name='vk_con', target=vk_con(), daemon=True)
+    aa = Thread(name='vk_con', target=vk_con)
 
-    bb = Process(name='listen', target=listen(), daemon=True)
+    bb = Thread(name='listen', target=listen)
 
+    dd = Thread(name='sender', target=sender,args= [input])
 
+    cc = Thread(name='tg_conv', target=tg_converastion,args=[input2])
+
+    aa.setDaemon(True)
+    bb.setDaemon(True)
+    cc.setDaemon(True)
+    dd.setDaemon(True)
+
+    dd.start()
+    cc.start()
     aa.start()
     bb.start()
+
+    while True:
+        pass
 
 
 
