@@ -423,4 +423,4 @@ def tg_converastion(input2):
 
     updater.idle()
 
-#tg_converastion(logger,updater,couple, USERS_baza, TYPING_CHOICE1,TYPING_CHOICE2,CHOICE1,CHOICE2,var1,var2)
+tg_converastion([logger,updater,couple, USERS_baza, TYPING_CHOICE1,TYPING_CHOICE2,CHOICE1,CHOICE2,var1,var2])
