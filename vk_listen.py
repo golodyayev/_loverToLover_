@@ -1,10 +1,12 @@
 from vk_class import server , user_vk, vk_df
 from tockens import tocken_vk
+import threading
 
 
 
 def listen():
     print("listen")
+    print (threading.currentThread().getName())
 
     vk = server(tocken_vk)
     vk.test()
@@ -15,4 +17,4 @@ def listen():
         except:
             print("some eror")
 
-#listen()
+listen()

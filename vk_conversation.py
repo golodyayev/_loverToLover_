@@ -6,6 +6,7 @@ from time import sleep
 import datetime
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 import uuid
+import threading
 
 from class1 import USER, USERS_DF
 from class2 import COUPLE_DF,questions , data,Current_day
@@ -268,8 +269,10 @@ def massage_handler_1(user,vk_df,dd):
 
 def vk_con():
     print("vk_convesation")
+    print(threading.currentThread().getName())
+
     while True:
-        if True:
+        try:
             sleep(1)
             vk_df.read()
             #vk_df.print()
@@ -291,5 +294,7 @@ def vk_con():
 
 
             vk_df.write()
+        except Exception as e:
+            print(e)
 
-#vk_con()
+vk_con()

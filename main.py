@@ -10,6 +10,7 @@ from tockens import tocken_vk
 import numpy as np
 from time import sleep
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
+import threading
 
 
 vk = server(tocken_vk)
@@ -51,6 +52,8 @@ data = data()
 def sender(input):
     [data, current, couple, book, bot, vk, keyboard_statistic, keyboard_like, markup, like] = input
     print("main")
+    print (threading.currentThread().getName())
+
     while True:
         print (int(datetime.datetime.now().strftime('%M')))
         t = 1.5
@@ -157,4 +160,4 @@ def sender(input):
 
 
 
-#sender(data,current,couple,book,bot,vk,keyboard_statistic,keyboard_like,markup,like)
+sender([data,current,couple,book,bot,vk,keyboard_statistic,keyboard_like,markup,like])
