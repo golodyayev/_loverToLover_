@@ -7,7 +7,7 @@ def listen():
     print("listen")
 
     vk = server(tocken_vk)
-    vk.test()
+    #vk.test()
     while True:
         #vk.test()
         try:

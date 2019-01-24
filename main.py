@@ -114,7 +114,7 @@ def sender(input):
                 current.write()
 
 
-            sleep(120)
+            sleep(420)
 
             if t>1:
 
@@ -154,7 +154,7 @@ def sender(input):
                     current.write()
 
 
-            sleep(120)
+            sleep(420)
 
 
 
