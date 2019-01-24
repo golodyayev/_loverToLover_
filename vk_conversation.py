@@ -275,7 +275,9 @@ def vk_con():
             #vk_df.print()
 
             for id in range(len(vk_df.get_user())):
-                dd = np.array(vk_df.get_user().loc[id])
+                #print (vk_df.get_user().iloc[0])
+                dd = np.array(vk_df.get_user().iloc[id])
+                #print (dd)
                 user = user_vk(dd[0])
 
                 massage_handler(user,vk_df,dd)
@@ -283,7 +285,11 @@ def vk_con():
 
 
             for id in range(len(vk_df.get_user_1())):
-                dd = np.array(vk_df.get_user_1().loc[id])
+                #print (vk_df.get_user_1())
+
+                dd = np.array(vk_df.get_user_1().iloc[id])
+                #print (dd[0])
+
                 user = user_vk(dd[0])
 
                 massage_handler_1(user,vk_df,dd)
